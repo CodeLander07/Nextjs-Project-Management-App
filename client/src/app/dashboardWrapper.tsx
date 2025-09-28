@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from "@/app/(components)/Navbar"
 import Sidebar from "@/app/(components)/Sidebar"
-const dashboardWrapper = ({children} :{children: React.ReactNode}) => {
+import StoreProvider , {useAppSelector} from './redux'
+const DashboardLayout = ({children} :{children: React.ReactNode}) => {
+  
+  const isSidebarCollapsed = useAppSelector((state) => state.global.isSidebarCollapsed);
+  
+
   return (
     <div className='flex min-h-screen w-full bg-gray-50 text-gray-900'>
       {/* Sidebar */}
@@ -12,6 +17,14 @@ const dashboardWrapper = ({children} :{children: React.ReactNode}) => {
       {children}
       </main>
     </div>
+  )
+}
+
+const dashboardWrapper = ({children} :{children: React.ReactNode}) => {
+  return (
+    <StoreProvider>
+      <DashboardLayout>{children}</DashboardLayout>
+    </StoreProvider>
   )
 }
 
